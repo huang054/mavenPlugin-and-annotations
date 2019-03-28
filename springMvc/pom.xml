@@ -44,8 +44,47 @@
 			<version>1.5.4</version>
 		</dependency>
 	</dependencies>
-
+<profiles>
+	<profile>
+       <id>pro</id>
+		<properties>
+			<profiles.active>pro</profiles.active>
+		</properties>
+		<activation>
+			<activeByDefault>true</activeByDefault>
+		</activation>
+	</profile>
+	<profile>
+        <id>dev</id>
+		<properties>
+			<profiles.active>dev</profiles.active>
+		</properties>
+	</profile>
+</profiles>
+	<distributionManagement>
+		<repository>
+			<id>Releases</id>
+			<name>Releases</name>
+			<url>http://192.168.100.12:8081/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>Snapshots</id>
+			<name>Snapshots</name>
+			<url>http://192.168.100.12:8081/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
 	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<excludes>
+					<exclude>/**</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/${profiles.active}</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
